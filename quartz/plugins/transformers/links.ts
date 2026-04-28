@@ -47,6 +47,10 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
               strategy: opts.markdownLinkResolution,
               allSlugs: ctx.allSlugs,
             }
+            const resourceTransformOptions: TransformOptions = {
+              strategy: "relative",
+              allSlugs: ctx.allSlugs,
+            }
 
             visit(tree, "element", (node, _index, _parent) => {
               // rewrite all links
@@ -152,7 +156,7 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
                   dest = node.properties.src = transformLink(
                     file.data.slug!,
                     dest,
-                    transformOptions,
+                    resourceTransformOptions,
                   )
                   node.properties.src = dest
                 }
